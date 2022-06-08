@@ -26,6 +26,7 @@ import {
   ErrorGetFileContentAndPathMissingFields,
   ErrorGetFileContentAndPathNoReturn
 } from '../errors/errors';
+import util from 'util';
 
 /**
  * Orchestrator to get file content and path, before writing files
@@ -69,7 +70,12 @@ export function getFileContentAndPath(
         if (metadata && metadata.dataType === 'enum')
           return { fileContent: getTokenString(file, name, format, metadata.dataType), filePath };
         filePath += `.${format}`;
-        return { fileContent: getTokenString(file, name, format), filePath };
+        if (name.startsWith('semantic')) {
+          return { fileContent: getSemanticTokenString(file, name, format), filePath };
+        } else {
+          //Otherwise primitive token
+          return { fileContent: getTokenString(file, name, format), filePath };
+        }
       },
       component: () => {
         if (type === 'component' && templates)
@@ -128,7 +134,7 @@ const getTokenString = (
 ) => {
   if (format === 'json') return `${JSON.stringify(file, null, ' ')}`;
 
-  const EXPORT = format === 'js' ? `module.exports = ${name}` : `export default ${name}`;
+  const EXPORT = format === 'js' ? `module.exports = ${name};` : ``;
 
   if (dataType === 'enum') {
     return `// ${MsgGeneratedFileWarning}\n\nenum ${name} {${createEnumStringOutOfObject(
@@ -138,11 +144,50 @@ const getTokenString = (
 
   const CONST_ASSERTION = format === 'ts' ? ' as const;' : '';
 
-  return `// ${MsgGeneratedFileWarning}\n\nconst ${name} = ${JSON.stringify(
-    file,
-    null,
-    ' '
-  )}${CONST_ASSERTION}\n\n${EXPORT};`;
+  // In order to support semantic tokens, need to switch from using JSON.stringify to util.inspect
+  // so that output is a primitive token reference as opposed to a quoted string of the token name
+  return `// ${MsgGeneratedFileWarning}\n\nexport const ${name} = ${util.inspect(
+    file
+  )}${CONST_ASSERTION}\n\n${EXPORT}`;
+};
+
+// https://stackoverflow.com/questions/11233498/json-stringify-without-quotes-on-properties
+const getSemanticTokenString = (file: string | ProcessedToken, name: string, format: string) => {
+  const CONST_ASSERTION = format === 'ts' ? ' as const;' : '';
+  const EXPORT = format === 'js' ? `module.exports = ${name}` : ``;
+  // For typography there could be several imports required since the styled
+  // element in Figma will be composed of several tokens.
+  let output: string = '';
+  let importStatements: string[] = [];
+  switch (name) {
+    case 'semanticColors':
+      importStatements.push("import { colors } from './colors';\n");
+      break;
+    case 'semanticDesktopTypography':
+    case 'semanticMobileTypography':
+    case 'semanticTabletTypography':
+      importStatements.push("import { colors } from './colors';\n");
+      importStatements.push("import { fontFamilies } from './fontFamilies';\n");
+      importStatements.push("import { fontSizes } from './fontSizes';\n");
+      importStatements.push("import { fontWeights } from './fontWeights';\n");
+      importStatements.push("import { lineHeights } from './lineHeights';\n");
+      importStatements.push("import { letterSpacings } from './letterSpacings';\n");
+      break;
+  }
+  output += `// ${MsgGeneratedFileWarning}\n\n`;
+  importStatements.forEach((statement) => (output += statement));
+  // Stackoverflow mentions utill is a debugging lib and the output string may be
+  // subject to change.
+  let jsonObj: string = util.inspect(file);
+
+  // Strip surrounding quotes from property values to arrive at variable
+  // references for the property
+  const matches = jsonObj.match(/'/gm);
+  matches?.forEach((m) => {
+    jsonObj = jsonObj.replace(m, '');
+  });
+  output += `\nexport const ${name} = ${jsonObj}${CONST_ASSERTION}\n\n${EXPORT}`;
+  return output;
 };
 
 /**

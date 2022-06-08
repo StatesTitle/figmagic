@@ -1,5 +1,26 @@
 ![Figmagic cover art](images/cover.png)
 
+# Doma Semantic Tokens Addition
+
+Fork from mikaelvesavuori/figmagic:main to add semantic color and typography frames for Bungalow design system as well as TS export tweaks for Doma.
+
+#### Extensions
+
+- createTokens.ts - add semantic token processing
+- errors.ts - add new error for semantic token processing
+- acceptedTokenTypes.ts - add additional supported token names
+
+#### Changes
+
+- .figmagicrc - prefix with '.' so that code will actually read from it
+- tsconfig.json - allow unused parameters
+- launch.json - point program target to build folder
+- makeColorTokens.ts - only process color tokens that are prefixed with '$'
+- getFileContentAndPath.ts - switch to using util.inspect over JSON.stringify to allow for primitive use in semantic token exports
+- Token/index.ts
+  - move extraction process to member function to support SemanticToken class inheritance
+  - change getTokens method to protected
+
 # Figmagic
 
 ![Build Status](https://github.com/mikaelvesavuori/figmagic/workflows/master/badge.svg)

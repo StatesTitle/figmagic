@@ -1,3 +1,4 @@
+/* These do not quite match the figma file frame names in DS template 4.0 */
 export const acceptedTokenTypes: string[] = [
   'borderwidths',
   'color',
@@ -16,5 +17,8 @@ export const acceptedTokenTypes: string[] = [
   'shadows',
   'spacing',
   'spacings',
-  'zindices'
+  'zindices',
+
+  // added token types
+  'mobilespacing'
 ];

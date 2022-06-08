@@ -4,6 +4,7 @@ import { FRAME as Frame } from '../contracts/Figma';
 
 import { createPage } from './interactors/common/createPage';
 import { processTokens } from './interactors/tokens/processTokens';
+import { processSemanticTokens } from './interactors/tokens/processSemanticTokens';
 import { writeTokens } from './interactors/tokens/writeTokens';
 
 import { refresh } from '../frameworks/filesystem/refresh';
@@ -26,6 +27,16 @@ export async function createTokens(config: Config, data: FigmaData): Promise<voi
 
     if (processedTokens && processedTokens.length > 0) writeTokens(processedTokens);
     else console.warn(MsgNoTokensFound);
+
+    // Process semantic tokens
+    // works similar to processTokens but will need the collection of primitive tokens from above
+    const semanticTokens = processSemanticTokens(tokensPage, processedTokens, config);
+
+    if (semanticTokens && semanticTokens.length > 0) {
+      writeTokens(semanticTokens);
+    } else {
+      console.warn(MsgNoTokensFound);
+    }
   } catch (error: any) {
     throw Error(error);
   }

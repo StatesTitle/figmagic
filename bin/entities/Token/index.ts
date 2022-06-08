@@ -23,10 +23,11 @@ import { makeEasingTokens } from './logic/makeEasingTokens';
 import { ignoreElementsKeywords } from '../../frameworks/system/ignoreElementsKeywords';
 import { ErrorExtractTokens, ErrorExtractTokensNoConfig } from '../../frameworks/errors/errors';
 
-export const makeToken = (token: Frame, tokenName: string, config: Config): Token =>
-  new Token(token, tokenName, config);
+export const makeToken = (token: Frame, tokenName: string, config: Config): Token => {
+  return new Token(token, tokenName, config).extract();
+};
 
-class Token {
+export class Token {
   token: Frame;
   tokenName: string;
   config: Config;
@@ -37,9 +38,14 @@ class Token {
     this.tokenName = tokenName;
     this.config = config;
     this.writeOperation = null;
+  }
 
+  // Runs the extraction process. Separated from constructor to allow subclasses
+  // to call super without triggering [primitive] token extractTokens.
+  public extract(): Token {
     const processedToken = this.extractTokens(this.token, this.tokenName, this.config);
-    this.setWriteOperation(processedToken, tokenName);
+    this.setWriteOperation(processedToken, this.tokenName);
+    return this;
   }
 
   private extractTokens(frame: Frame, tokenName: string, config: Config): ProcessedToken {
@@ -73,7 +79,7 @@ class Token {
     }
   };
 
-  private getTokens = (frame: Frame, name: string, config: Config): any => {
+  protected getTokens = (frame: Frame, name: string, config: Config): any => {
     const {
       borderWidthUnit,
       camelizeTokenNames,
@@ -123,7 +129,7 @@ class Token {
         if (!config) throw Error(ErrorExtractTokensNoConfig);
         return makeSpacingTokens(frame, spacingUnit, remSize, camelizeTokenNames);
       },
-      spacings: () => {
+      mobilespacing: () => {
         if (!config) throw Error(ErrorExtractTokensNoConfig);
         return makeSpacingTokens(frame, spacingUnit, remSize, camelizeTokenNames);
       },
