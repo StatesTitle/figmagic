@@ -98,7 +98,7 @@ function makeSemFontToken(
   // Create line height token reference
   let heightsKey = getKeyByValue(
     lineHeights.file,
-    (STYLE.lineHeightPercentFontSize / 100).toString()
+    (STYLE.lineHeightPercentFontSize / 100).toPrecision(3).toString()
   );
   if (heightsKey !== undefined) {
     typography[NAME + 'LineHeight'] = `${lineHeights.name}.${heightsKey}`;

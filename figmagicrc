@@ -9,6 +9,6 @@
   "outputFormatElements": "tsx",
   "outputFormatTokens": "ts",
   "spacingUnit": "rem",
-  "usePostscriptFontNames": true,
+  "usePostscriptFontNames": false,
   "debugMode": true
 }
