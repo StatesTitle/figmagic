@@ -166,12 +166,10 @@ const getSemanticTokenString = (file: string | ProcessedToken, name: string, for
     case 'semanticDesktopTypography':
     case 'semanticMobileTypography':
     case 'semanticTabletTypography':
-      importStatements.push("import { colors } from './colors';\n");
       importStatements.push("import { fontFamilies } from './fontFamilies';\n");
       importStatements.push("import { fontSizes } from './fontSizes';\n");
       importStatements.push("import { fontWeights } from './fontWeights';\n");
       importStatements.push("import { lineHeights } from './lineHeights';\n");
-      importStatements.push("import { letterSpacings } from './letterSpacings';\n");
       break;
   }
   output += `// ${MsgGeneratedFileWarning}\n\n`;

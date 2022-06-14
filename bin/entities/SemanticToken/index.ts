@@ -61,19 +61,8 @@ class SemanticToken extends Token {
         if (this.primitives === undefined) {
           throw Error(ErrorMakeColorTokensNoPrimitive);
         }
-        const typeByThemes: any = {};
         if (!frame.children) throw Error(ErrorMakeFontTokensNoFrame);
-        const themes = frame.children.reverse();
-        themes.forEach((f: Frame) => {
-          if (f.type === 'FRAME' && f.name.startsWith('theme/')) {
-            typeByThemes[f.name.substring(6)] = makeSemanticFontTokens(
-              f,
-              this.primitives,
-              camelizeTokenNames
-            );
-          }
-        });
-        return typeByThemes;
+        return makeSemanticFontTokens(frame, this.primitives, camelizeTokenNames);
       },
       semanticmobiletypography: () => {
         return makeSemanticFontTokens(frame, this.primitives, camelizeTokenNames);
