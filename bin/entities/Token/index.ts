@@ -111,6 +111,10 @@ export class Token {
         if (!config) throw Error(ErrorExtractTokensNoConfig);
         return makeFontSizeTokens(frame, fontUnit, remSize, camelizeTokenNames);
       },
+      mobilefontsizes: () => {
+        if (!config) throw Error(ErrorExtractTokensNoConfig);
+        return makeFontSizeTokens(frame, fontUnit, remSize, camelizeTokenNames);
+      },
       fontweights: () => makeFontWeightTokens(frame, camelizeTokenNames),
       letterspacings: () => {
         if (!config) throw Error(ErrorExtractTokensNoConfig);
