@@ -20,5 +20,6 @@ export const acceptedTokenTypes: string[] = [
   'zindices',
 
   // added token types
-  'mobilespacing'
+  'mobilespacing',
+  'mobilefontsizes'
 ];

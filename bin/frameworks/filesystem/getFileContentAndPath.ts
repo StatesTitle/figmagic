@@ -134,12 +134,12 @@ const getTokenString = (
 ) => {
   if (format === 'json') return `${JSON.stringify(file, null, ' ')}`;
 
-  const EXPORT = format === 'js' ? `module.exports = ${name};` : ``;
+  const EXPORT = format === 'js' ? `module.exports = ${name};\n` : ``;
 
   if (dataType === 'enum') {
     return `// ${MsgGeneratedFileWarning}\n\nenum ${name} {${createEnumStringOutOfObject(
       file
-    )}\n}\n\n${EXPORT};`;
+    )}\n}\n${EXPORT};`;
   }
 
   const CONST_ASSERTION = format === 'ts' ? ' as const;' : '';
@@ -148,17 +148,17 @@ const getTokenString = (
   // so that output is a primitive token reference as opposed to a quoted string of the token name
   return `// ${MsgGeneratedFileWarning}\n\nexport const ${name} = ${util.inspect(
     file
-  )}${CONST_ASSERTION}\n\n${EXPORT}`;
+  )}${CONST_ASSERTION}\n${EXPORT}`;
 };
 
 // https://stackoverflow.com/questions/11233498/json-stringify-without-quotes-on-properties
 const getSemanticTokenString = (file: string | ProcessedToken, name: string, format: string) => {
   const CONST_ASSERTION = format === 'ts' ? ' as const;' : '';
-  const EXPORT = format === 'js' ? `module.exports = ${name}` : ``;
+  const EXPORT = format === 'js' ? `module.exports = ${name}\n` : ``;
   // For typography there could be several imports required since the styled
   // element in Figma will be composed of several tokens.
-  let output: string = '';
-  let importStatements: string[] = [];
+  let output = '';
+  const importStatements: string[] = [];
   switch (name) {
     case 'semanticColors':
       importStatements.push("import { colors } from './colors';\n");
@@ -184,7 +184,7 @@ const getSemanticTokenString = (file: string | ProcessedToken, name: string, for
   matches?.forEach((m) => {
     jsonObj = jsonObj.replace(m, '');
   });
-  output += `\nexport const ${name} = ${jsonObj}${CONST_ASSERTION}\n\n${EXPORT}`;
+  output += `\nexport const ${name} = ${jsonObj}${CONST_ASSERTION}\n${EXPORT}`;
   return output;
 };
 
