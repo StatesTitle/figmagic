@@ -25,7 +25,7 @@ export function makeSemanticFontTokens(
   //Only process $ prefaced items
   TOKENS.forEach((item: Frame) => {
     if (item.name.startsWith('$')) {
-      makeSemFontToken(item, typography, primitives);
+      makeSemFontToken(item, typography, primitives, fontFrame.name);
     }
   });
   return typography;
@@ -35,6 +35,7 @@ function makeSemFontToken(
   item: Frame,
   typography: Record<string, unknown>,
   primitives: [],
+  fontFrameName: string,
   //outputFormatColors: OutputFormatColors,
   camelizeTokenNames?: boolean
 ) {
@@ -58,7 +59,9 @@ function makeSemFontToken(
   //   const colors = getTokenFile('colors');
   const fonts = getTokenFile('fontFamilies');
   const weights = getTokenFile('fontWeights');
-  const sizes = getTokenFile('fontSizes');
+  const sizes = getTokenFile(
+    fontFrameName.toLocaleLowerCase().includes('mobile') ? 'mobileFontSizes' : 'fontSizes'
+  );
   const lineHeights = getTokenFile('lineHeights');
   // Enable if we use letterSpacings
   // const letterSpacings = getTokenFile("letterSpacings");
