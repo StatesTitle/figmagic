@@ -6,8 +6,8 @@ import {
   ErrorMakeColorTokensNoPrimitive,
   ErrorMakeFontTokensNoFrame
 } from '../../frameworks/errors/errors';
-import { makeSemanticColorTokens } from '../Token/logic/makeSemanticColorTokens';
-import { makeSemanticFontTokens } from '../Token/logic/makeSemanticFontTokens';
+import { makeSemanticColorTokens } from './logic/makeSemanticColorTokens';
+import { makeSemanticFontTokens } from './logic/makeSemanticFontTokens';
 
 export const makeSemanticToken = (
   token: Frame,
