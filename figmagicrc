@@ -8,7 +8,9 @@
   "outputFolderTokens": "tokens",
   "outputFormatElements": "tsx",
   "outputFormatTokens": "ts",
+	"outputFormatColors": "hex",
   "spacingUnit": "rem",
   "usePostscriptFontNames": false,
-  "debugMode": true
+  "debugMode": true,
+	"mediaQueryUnit": "rem"
 }

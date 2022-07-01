@@ -1,6 +1,6 @@
 import { FRAME as Frame } from '../../../contracts/Figma';
 import { MediaQueryTokens } from '../../../contracts/Tokens';
-
+import { MediaQueryUnit } from '../../../contracts/Config';
 import { sanitizeString } from '../../../frameworks/string/sanitizeString';
 
 import {
@@ -14,6 +14,8 @@ import {
  */
 export function makeMediaQueryTokens(
   mediaQueryFrame: Frame,
+	remSize: number,
+	mediaQueryUnit?: MediaQueryUnit,
   camelizeTokenNames?: boolean
 ): MediaQueryTokens {
   if (!mediaQueryFrame) throw Error(ErrorSetupMediaQueryTokensNoFrame);
@@ -21,7 +23,8 @@ export function makeMediaQueryTokens(
 
   const mediaQueries: Record<string, unknown> = {};
   const TOKENS = mediaQueryFrame.children.reverse();
-  TOKENS.forEach((item: Frame) => makeMediaQueryToken(item, mediaQueries, camelizeTokenNames));
+  TOKENS.forEach((item: Frame) => makeMediaQueryToken(item, mediaQueries, 
+		remSize, mediaQueryUnit, camelizeTokenNames));
 
   return mediaQueries;
 }
@@ -29,10 +32,19 @@ export function makeMediaQueryTokens(
 function makeMediaQueryToken(
   item: Frame,
   mediaQueries: Record<string, unknown>,
+	remSize: number,
+	mediaQueryUnit?: MediaQueryUnit,
   camelizeTokenNames?: boolean
 ) {
   if (!item.name || !item.absoluteBoundingBox) throw Error(ErrorSetupMediaQueryTokensMissingProps);
 
   const NAME = sanitizeString(item.name, camelizeTokenNames);
-  mediaQueries[NAME] = `${item.absoluteBoundingBox.width}px`;
+	let mqunit:string = (mediaQueryUnit) ? mediaQueryUnit : "px";
+	const breakpoint:number = (item.absoluteBoundingBox.width) ? item.absoluteBoundingBox.width : 0;
+	if (mqunit==="rem")	{
+		mediaQueries[NAME] = `${breakpoint/remSize}${mqunit}`;
+	}
+	else {
+		mediaQueries[NAME] = `${breakpoint}${mqunit}`;
+	}
 }

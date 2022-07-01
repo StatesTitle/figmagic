@@ -7,6 +7,7 @@ export const baseConfig: Config = {
   fontUnit: 'rem',
   letterSpacingUnit: 'em',
   lineHeightUnit: 'unitless',
+	mediaQueryUnit: 'px',
   opacitiesUnit: 'float',
   radiusUnit: 'px',
   shadowUnit: 'px',
