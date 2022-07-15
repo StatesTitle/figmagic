@@ -17,7 +17,7 @@ export function makeZindexTokens(zIndexFrame: Frame, camelizeTokenNames?: boolea
   if (!zIndexFrame.children) throw Error(ErrorMakeZindexTokensNoChildren);
 
   const zIndex: Record<string, unknown> = {};
-  const TOKENS = zIndexFrame.children.reverse();
+  const TOKENS = zIndexFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) => makeZindexToken(item, zIndex, camelizeTokenNames));
 
   return zIndex;

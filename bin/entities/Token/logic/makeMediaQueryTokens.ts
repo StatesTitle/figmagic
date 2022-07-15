@@ -20,7 +20,7 @@ export function makeMediaQueryTokens(
   if (!mediaQueryFrame.children) throw Error(ErrorSetupMediaQueryTokensNoChildren);
 
   const mediaQueries: Record<string, unknown> = {};
-  const TOKENS = mediaQueryFrame.children.reverse();
+  const TOKENS = mediaQueryFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) => makeMediaQueryToken(item, mediaQueries, camelizeTokenNames));
 
   return mediaQueries;

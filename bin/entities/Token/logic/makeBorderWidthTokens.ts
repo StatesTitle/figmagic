@@ -23,7 +23,7 @@ export function makeBorderWidthTokens(
   if (!borderWidthFrame.children) throw Error(ErrorMakeBorderWidthTokensNoChildren);
 
   const borderWidths: Record<string, unknown> = {};
-  const TOKENS = borderWidthFrame.children.reverse();
+  const TOKENS = borderWidthFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) =>
     makeBorderWidthToken(item, borderWidths, remSize, borderWidthUnit, camelizeTokenNames)
   );

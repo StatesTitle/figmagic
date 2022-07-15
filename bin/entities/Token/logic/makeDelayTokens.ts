@@ -17,7 +17,7 @@ export function makeDelayTokens(delayFrame: Frame, camelizeTokenNames?: boolean)
   if (!delayFrame.children) throw Error(ErrorMakeDelayTokensNoChildren);
 
   const delays: Record<string, unknown> = {};
-  const TOKENS = delayFrame.children.reverse();
+  const TOKENS = delayFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) => makeDelayToken(item, delays, camelizeTokenNames));
 
   return delays;

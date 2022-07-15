@@ -21,7 +21,7 @@ export function makeFontWeightTokens(
   if (!fontWeightFrame.children) throw Error(ErrorMakeFontWeightTokensNoChildren);
 
   const fontWeights: Record<string, unknown> = {};
-  const TOKENS = fontWeightFrame.children.reverse();
+  const TOKENS = fontWeightFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) => makeFontWeightToken(item, fontWeights, camelizeTokenNames));
 
   return fontWeights;

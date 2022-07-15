@@ -24,7 +24,7 @@ export function makeRadiusTokens(
   if (!radiusFrame.children) throw Error(ErrorMakeRadiusTokensNoChildren);
 
   const cornerRadii: Record<string, unknown> = {};
-  const tokens = radiusFrame.children.reverse();
+  const tokens = radiusFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   tokens.forEach((item: Frame) =>
     makeRadiusToken(item, cornerRadii, radiusUnit, remSize, camelizeTokenNames)
   );

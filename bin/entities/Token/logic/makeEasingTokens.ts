@@ -17,7 +17,7 @@ export function makeEasingTokens(easingFrame: Frame, camelizeTokenNames?: boolea
   if (!easingFrame.children) throw Error(ErrorMakeEasingTokensNoChildren);
 
   const easings: Record<string, unknown> = {};
-  const TOKENS = easingFrame.children.reverse();
+  const TOKENS = easingFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) => makeEasingToken(item, easings, camelizeTokenNames));
 
   return easings;
