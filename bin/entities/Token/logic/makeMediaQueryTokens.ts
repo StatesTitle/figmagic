@@ -20,6 +20,7 @@ export function makeMediaQueryTokens(
   if (!mediaQueryFrame.children) throw Error(ErrorSetupMediaQueryTokensNoChildren);
 
   const mediaQueries: Record<string, unknown> = {};
+  // Only process $ prefixed elements to allow for arbitrary documentation items in the Figma frame.
   const TOKENS = mediaQueryFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) => makeMediaQueryToken(item, mediaQueries, camelizeTokenNames));
 

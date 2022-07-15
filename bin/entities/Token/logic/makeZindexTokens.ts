@@ -17,6 +17,7 @@ export function makeZindexTokens(zIndexFrame: Frame, camelizeTokenNames?: boolea
   if (!zIndexFrame.children) throw Error(ErrorMakeZindexTokensNoChildren);
 
   const zIndex: Record<string, unknown> = {};
+  // Only process $ prefixed elements to allow for arbitrary documentation items in the Figma frame.
   const TOKENS = zIndexFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) => makeZindexToken(item, zIndex, camelizeTokenNames));
 

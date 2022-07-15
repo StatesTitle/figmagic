@@ -29,6 +29,7 @@ export function makeLetterSpacingTokens(
   if (!letterSpacingFrame) throw Error(ErrorMakeLetterSpacingTokensNoFrame);
   if (!letterSpacingFrame.children) throw Error(ErrorMakeLetterSpacingTokensNoChildren);
 
+  // Only process $ prefixed elements to allow for arbitrary documentation items in the Figma frame.
   const TOKENS = letterSpacingFrame.children.filter((item) => item.name.startsWith('$')).reverse();
 
   const letterSpacings = TOKENS.reduce((tokens: { [index: string]: any }, item: Frame) => {

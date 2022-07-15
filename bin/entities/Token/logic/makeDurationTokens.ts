@@ -20,6 +20,7 @@ export function makeDurationTokens(
   if (!durationFrame.children) throw Error(ErrorMakeDurationTokensNoChildren);
 
   const durations: Record<string, unknown> = {};
+  // Only process $ prefixed elements to allow for arbitrary documentation items in the Figma frame.
   const TOKENS = durationFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) => makeDurationToken(item, durations, camelizeTokenNames));
 

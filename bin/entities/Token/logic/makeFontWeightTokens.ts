@@ -21,6 +21,7 @@ export function makeFontWeightTokens(
   if (!fontWeightFrame.children) throw Error(ErrorMakeFontWeightTokensNoChildren);
 
   const fontWeights: Record<string, unknown> = {};
+  // Only process $ prefixed elements to allow for arbitrary documentation items in the Figma frame.
   const TOKENS = fontWeightFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) => makeFontWeightToken(item, fontWeights, camelizeTokenNames));
 
