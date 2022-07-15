@@ -21,7 +21,8 @@ export function makeFontTokens(
   if (!fontFrame.children) throw Error(ErrorMakeFontTokensNoChildren);
 
   const fonts: Record<string, unknown> = {};
-  const TOKENS = fontFrame.children.reverse();
+  // Only process $ prefixed elements to allow for arbitrary documentation items in the Figma frame.
+  const TOKENS = fontFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) =>
     makeFontToken(item, fonts, usePostscriptFontNames, camelizeTokenNames)
   );

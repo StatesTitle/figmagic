@@ -24,7 +24,8 @@ export function makeShadowTokens(
   if (!shadowFrame.children) throw Error(ErrorMakeShadowTokensNoChildren);
 
   const shadows: Record<string, unknown> = {};
-  const TOKENS = shadowFrame.children.reverse();
+  // Only process $ prefixed elements to allow for arbitrary documentation items in the Figma frame.
+  const TOKENS = shadowFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) =>
     makeShadowToken(item, shadows, shadowUnit, remSize, camelizeTokenNames)
   );

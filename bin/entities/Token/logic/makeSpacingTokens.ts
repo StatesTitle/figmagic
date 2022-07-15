@@ -25,7 +25,8 @@ export function makeSpacingTokens(
   if (!spacingUnit || !remSize) throw Error(ErrorMakeSpacingTokensNoUnits);
 
   const spacings: Record<string, unknown> = {};
-  const TOKENS = spacingFrame.children.reverse();
+  // Only process $ prefixed elements to allow for arbitrary documentation items in the Figma frame.
+  const TOKENS = spacingFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) =>
     makeSpacingToken(item, spacings, spacingUnit, remSize, camelizeTokenNames)
   );

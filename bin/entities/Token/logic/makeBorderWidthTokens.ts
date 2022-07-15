@@ -23,7 +23,8 @@ export function makeBorderWidthTokens(
   if (!borderWidthFrame.children) throw Error(ErrorMakeBorderWidthTokensNoChildren);
 
   const borderWidths: Record<string, unknown> = {};
-  const TOKENS = borderWidthFrame.children.reverse();
+  // Only process $ prefixed elements to allow for arbitrary documentation items in the Figma frame.
+  const TOKENS = borderWidthFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) =>
     makeBorderWidthToken(item, borderWidths, remSize, borderWidthUnit, camelizeTokenNames)
   );
