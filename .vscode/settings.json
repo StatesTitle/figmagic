@@ -1,6 +1,5 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": false
-  },
-  "prettier.requireConfig": true
+    "source.fixAll.eslint": true
+  }
 }
