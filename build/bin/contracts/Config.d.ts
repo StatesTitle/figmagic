@@ -5,6 +5,7 @@ export declare type Config = {
     fontUnit: FontUnits;
     letterSpacingUnit: LetterSpacingUnit;
     lineHeightUnit: LineHeightUnit;
+    mediaQueryUnit: MediaQueryUnit;
     opacitiesUnit: OpacitiesUnit;
     radiusUnit: RadiusUnit;
     shadowUnit: ShadowUnit;
@@ -59,6 +60,7 @@ export declare type ConfigDTO = {
     fontUnit?: FontUnits;
     letterSpacingUnit?: LetterSpacingUnit;
     lineHeightUnit?: LineHeightUnit;
+    mediaQueryUnit?: MediaQueryUnit;
     opacitiesUnit?: OpacitiesUnit;
     radiusUnit?: RadiusUnit;
     shadowUnit?: ShadowUnit;
@@ -129,6 +131,7 @@ export declare type LetterSpacingUnit = 'em' | 'px';
 export declare type LineHeightUnit = 'unitless' | 'px' | 'rem' | 'em';
 export declare type OpacitiesUnit = 'float' | 'percent';
 export declare type SpacingUnit = 'rem' | 'em' | 'px';
+export declare type MediaQueryUnit = 'rem' | 'px';
 export declare type OutputFormatColors = 'hex' | 'rgba';
 export declare type OutputFormatCss = 'ts' | 'mjs' | 'js';
 export declare type OutputFormatDescription = 'md' | 'txt';

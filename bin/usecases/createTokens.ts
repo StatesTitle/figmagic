@@ -11,6 +11,7 @@ import { refresh } from '../frameworks/filesystem/refresh';
 
 import { MsgWriteTokens, MsgNoTokensFound } from '../frameworks/messages/messages';
 import { ErrorCreateTokens } from '../frameworks/errors/errors';
+import { writeIndexFile } from '../frameworks/filesystem/writeIndexFile';
 
 /**
  * @description Use case for creating token files from Figma
@@ -37,6 +38,8 @@ export async function createTokens(config: Config, data: FigmaData): Promise<voi
     } else {
       console.warn(MsgNoTokensFound);
     }
+
+    writeIndexFile();
   } catch (error: any) {
     throw Error(error);
   }
