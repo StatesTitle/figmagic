@@ -93,7 +93,8 @@ export class Token {
       shadowUnit,
       spacingUnit,
       unitlessPrecision,
-      usePostscriptFontNames
+      usePostscriptFontNames,
+			mediaQueryUnit,
     } = config;
     const tokenOperations = {
       borderwidths: () =>
@@ -122,7 +123,7 @@ export class Token {
       },
       lineheights: () =>
         makeLineHeightTokens(frame, remSize, unitlessPrecision, lineHeightUnit, camelizeTokenNames),
-      mediaqueries: () => makeMediaQueryTokens(frame, camelizeTokenNames),
+      mediaqueries: () => makeMediaQueryTokens(frame, remSize, mediaQueryUnit, camelizeTokenNames),
       opacities: () => {
         if (!config) throw Error(ErrorExtractTokensNoConfig);
         return makeOpacityTokens(frame, opacitiesUnit, camelizeTokenNames);
