@@ -124,6 +124,12 @@ export function getFileContentAndPath(
 }
 
 /**
+ * @description Add trailing comma to token objects
+ */
+const addTrailingComma = (dataString: string) =>
+  dataString.replace(/\n}/, ',\n}').replace(/ }/, ', }');
+
+/**
  * @description Get file data string for tokens using either null/no data type or enum data type
  */
 const getTokenString = (
@@ -142,18 +148,17 @@ const getTokenString = (
     )}\n}\n${EXPORT};`;
   }
 
-  const CONST_ASSERTION = format === 'ts' ? ' as const;' : '';
+  const CONST_ASSERTION = format === 'ts' ? ' as const' : '';
+  const DATA = addTrailingComma(util.inspect(file));
 
   // In order to support semantic tokens, need to switch from using JSON.stringify to util.inspect
   // so that output is a primitive token reference as opposed to a quoted string of the token name
-  return `// ${MsgGeneratedFileWarning}\n\nexport const ${name} = ${util.inspect(
-    file
-  )}${CONST_ASSERTION}\n${EXPORT}`;
+  return `// ${MsgGeneratedFileWarning}\n\nexport const ${name} = ${DATA}${CONST_ASSERTION}\n${EXPORT}`;
 };
 
 // https://stackoverflow.com/questions/11233498/json-stringify-without-quotes-on-properties
 const getSemanticTokenString = (file: string | ProcessedToken, name: string, format: string) => {
-  const CONST_ASSERTION = format === 'ts' ? ' as const;' : '';
+  const CONST_ASSERTION = format === 'ts' ? ' as const' : '';
   const EXPORT = format === 'js' ? `module.exports = ${name}\n` : ``;
   // For typography there could be several imports required since the styled
   // element in Figma will be composed of several tokens.
@@ -189,7 +194,8 @@ const getSemanticTokenString = (file: string | ProcessedToken, name: string, for
   matches?.forEach((m) => {
     jsonObj = jsonObj.replace(m, '');
   });
-  output += `\nexport const ${name} = ${jsonObj}${CONST_ASSERTION}\n${EXPORT}`;
+  const data = addTrailingComma(jsonObj);
+  output += `\nexport const ${name} = ${data}${CONST_ASSERTION}\n${EXPORT}`;
   return output;
 };
 
