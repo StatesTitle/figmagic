@@ -24,12 +24,10 @@ export function makeColorTokens(
   if (!colorFrame.children) throw Error(ErrorMakeColorTokensNoChildren);
 
   const colors: Record<string, unknown> = {};
-  const TOKENS = colorFrame.children.reverse();
+  // Only process $ prefixed elements to allow for arbitrary documentation items in the Figma frame.
+  const TOKENS = colorFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) => {
-    // Only process $ prefixed elements to allow for arbitrary documentation items in the Figma frame.
-    if (item.name.startsWith('$')) {
-      makeColorToken(item, colors, outputFormatColors, camelizeTokenNames);
-    }
+    makeColorToken(item, colors, outputFormatColors, camelizeTokenNames);
   });
 
   return colors;

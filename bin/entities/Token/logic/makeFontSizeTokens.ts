@@ -26,7 +26,8 @@ export function makeFontSizeTokens(
   if (!fontUnit || !remSize) throw Error(ErrorMakeFontSizeTokensNoSizing);
 
   const fontSizes: Record<string, unknown> = {};
-  const TOKENS = fontSizeFrame.children.reverse();
+  // Only process $ prefixed elements to allow for arbitrary documentation items in the Figma frame.
+  const TOKENS = fontSizeFrame.children.filter((item) => item.name.startsWith('$')).reverse();
   TOKENS.forEach((item: Frame) =>
     makeFontSizeToken(item, fontSizes, remSize, fontUnit, camelizeTokenNames)
   );
