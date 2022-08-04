@@ -99,7 +99,7 @@
     "typedoc": "latest",
     "typescript": "4",
     "webpack": "5",
-    "webpack-cli": "4",
+    "webpack-cli": "^4.10.0",
     "webpack-shebang-plugin": "1"
   }
 }
