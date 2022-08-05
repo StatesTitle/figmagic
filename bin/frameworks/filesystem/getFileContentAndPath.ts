@@ -126,8 +126,7 @@ export function getFileContentAndPath(
 /**
  * @description Add trailing comma to token objects
  */
-const addTrailingComma = (dataString: string) =>
-  dataString.replace(/\n}/, ',\n}').replace(/ }/, ', }');
+const addTrailingComma = (dataString: string) => dataString.replace(/\n}/, ',\n}');
 
 /**
  * @description Get file data string for tokens using either null/no data type or enum data type
