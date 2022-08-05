@@ -172,6 +172,7 @@ const getSemanticTokenString = (file: string | ProcessedToken, name: string, for
       importStatements.push("import { fontFamilies } from './fontFamilies';\n");
       importStatements.push("import { mobileFontSizes } from './mobileFontSizes';\n");
       importStatements.push("import { fontWeights } from './fontWeights';\n");
+      importStatements.push("import { letterSpacings } from './letterSpacings'\n");
       importStatements.push("import { lineHeights } from './lineHeights';\n");
       break;
     case 'semanticDesktopTypography':
@@ -179,6 +180,7 @@ const getSemanticTokenString = (file: string | ProcessedToken, name: string, for
       importStatements.push("import { fontFamilies } from './fontFamilies';\n");
       importStatements.push("import { fontSizes } from './fontSizes';\n");
       importStatements.push("import { fontWeights } from './fontWeights';\n");
+      importStatements.push("import { letterSpacings } from './letterSpacings'\n");
       importStatements.push("import { lineHeights } from './lineHeights';\n");
       break;
   }
