@@ -107,6 +107,7 @@ function makeSemFontToken(
   }
 
   // Create letter spacing token reference
+  // (assuming 'regular' as the key for 0em spacing. will need to change if the figma changes)
   let letterSpacingsKey = getKeyByValue(letterSpacings.file, STYLE.letterSpacing);
   typography[NAME + 'LetterSpacing'] = `${letterSpacings.name}.${
     letterSpacingsKey !== undefined ? letterSpacingsKey : 'regular'
