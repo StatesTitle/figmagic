@@ -126,8 +126,7 @@ export function getFileContentAndPath(
 /**
  * @description Add trailing comma to token objects
  */
-const addTrailingComma = (dataString: string) =>
-  dataString.replace(/\n}/, ',\n}').replace(/ }/, ', }');
+const addTrailingComma = (dataString: string) => dataString.replace(/\n}/, ',\n}');
 
 /**
  * @description Get file data string for tokens using either null/no data type or enum data type
@@ -166,22 +165,22 @@ const getSemanticTokenString = (file: string | ProcessedToken, name: string, for
   const importStatements: string[] = [];
   switch (name) {
     case 'semanticColors':
-      importStatements.push("import { colors } from './colors';\n");
+      importStatements.push("import { colors } from './colors'\n");
       break;
     case 'semanticMobileTypography':
-      importStatements.push("import { fontFamilies } from './fontFamilies';\n");
-      importStatements.push("import { mobileFontSizes } from './mobileFontSizes';\n");
-      importStatements.push("import { fontWeights } from './fontWeights';\n");
+      importStatements.push("import { fontFamilies } from './fontFamilies'\n");
+      importStatements.push("import { mobileFontSizes } from './mobileFontSizes'\n");
+      importStatements.push("import { fontWeights } from './fontWeights'\n");
       importStatements.push("import { letterSpacings } from './letterSpacings'\n");
-      importStatements.push("import { lineHeights } from './lineHeights';\n");
+      importStatements.push("import { lineHeights } from './lineHeights'\n");
       break;
     case 'semanticDesktopTypography':
     case 'semanticTabletTypography':
-      importStatements.push("import { fontFamilies } from './fontFamilies';\n");
-      importStatements.push("import { fontSizes } from './fontSizes';\n");
-      importStatements.push("import { fontWeights } from './fontWeights';\n");
+      importStatements.push("import { fontFamilies } from './fontFamilies'\n");
+      importStatements.push("import { fontSizes } from './fontSizes'\n");
+      importStatements.push("import { fontWeights } from './fontWeights'\n");
       importStatements.push("import { letterSpacings } from './letterSpacings'\n");
-      importStatements.push("import { lineHeights } from './lineHeights';\n");
+      importStatements.push("import { lineHeights } from './lineHeights'\n");
       break;
   }
   output += `// ${MsgGeneratedFileWarning}\n\n`;
