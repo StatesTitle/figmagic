@@ -63,8 +63,7 @@ function makeSemFontToken(
     fontFrameName.toLocaleLowerCase().includes('mobile') ? 'mobileFontSizes' : 'fontSizes'
   );
   const lineHeights = getTokenFile('lineHeights');
-  // Enable if we use letterSpacings
-  // const letterSpacings = getTokenFile("letterSpacings");
+  const letterSpacings = getTokenFile('letterSpacings');
 
   // A type style includes a number of properties that each should be referencing
   // the appropriate primitive token.
@@ -106,4 +105,11 @@ function makeSemFontToken(
   if (heightsKey !== undefined) {
     typography[NAME + 'LineHeight'] = `${lineHeights.name}.${heightsKey}`;
   }
+
+  // Create letter spacing token reference
+  // (assuming 'regular' as the key for 0em spacing. will need to change if the figma changes)
+  let letterSpacingsKey = getKeyByValue(letterSpacings.file, STYLE.letterSpacing);
+  typography[NAME + 'LetterSpacing'] = `${letterSpacings.name}.${
+    letterSpacingsKey !== undefined ? letterSpacingsKey : 'regular'
+  }`;
 }
