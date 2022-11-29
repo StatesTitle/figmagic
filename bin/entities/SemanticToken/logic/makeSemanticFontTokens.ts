@@ -54,9 +54,6 @@ function makeSemFontToken(
   //NAME is the item name.
   const NAME = sanitizeString(item.name, camelizeTokenNames);
   const STYLE = item.style;
-  //   const FILLS = item.fills[0];
-
-  //   const colors = getTokenFile('colors');
   const fonts = getTokenFile('fontFamilies');
   const weights = getTokenFile('fontWeights');
   const sizes = getTokenFile(
@@ -67,15 +64,6 @@ function makeSemFontToken(
 
   // A type style includes a number of properties that each should be referencing
   // the appropriate primitive token.
-
-  // Get the text color
-  //   if (item.fills[0].type === 'SOLID') {
-  //     const colorVal = createSolidColorString(FILLS, outputFormatColors);
-  //     let colorKey = getKeyByValue(colors.file, colorVal);
-  //     if (colorKey !== undefined) {
-  //       typography[NAME + 'Color'] = `${colors.name}.${colorKey}`;
-  //     }
-  //   }
 
   // Create size token reference
   // Go to REM; do not assume 16px; this needs config somewhere
@@ -107,9 +95,10 @@ function makeSemFontToken(
   }
 
   // Create letter spacing token reference
-  // (assuming 'regular' as the key for 0em spacing. will need to change if the figma changes)
-  let letterSpacingsKey = getKeyByValue(letterSpacings.file, STYLE.letterSpacing);
-  typography[NAME + 'LetterSpacing'] = `${letterSpacings.name}.${
-    letterSpacingsKey !== undefined ? letterSpacingsKey : 'regular'
-  }`;
+	// Letter spacing values from Figma are expressed as em and not rem.
+  let letterSpacingsKey = getKeyByValue(letterSpacings.file, 
+		STYLE.letterSpacing.toString()+'em');
+	if (letterSpacingsKey!==undefined) {
+		typography[NAME + 'LetterSpacing'] = `${letterSpacings.name}.${letterSpacingsKey}`;
+	}
 }
